@@ -10,7 +10,11 @@ var Tuner = function () {
   this.noteStrings = ['C', 'C♯', 'D', 'D♯', 'E', 'F', 'F♯', 'G', 'G♯', 'A', 'A♯', 'B']
   this.audioContext = new window.AudioContext()
   this.analyser = this.audioContext.createAnalyser()
-  this.scriptProcessor = this.audioContext.createScriptProcessor(this.bufferSize, 1, 1)
+  if(!this.audioContext.createScriptProcessor){
+       this.scriptProcessor = this.audioContext.createJavaScriptNode(4096, 2, 2);
+  } else {
+       this.scriptProcessor = this.audioContext.createScriptProcessor(4096, 2, 2);
+  }
   this.pitchDetector = new (Module().AubioPitch)(
     'default', this.bufferSize, 1, this.audioContext.sampleRate)
 }
@@ -22,13 +26,20 @@ Tuner.prototype.start = function () {
   }
 
   var self = this
-  navigator.getUserMedia({
-    audio: true,
-  }, function (stream) {
+  console.log('navigator.getUserMedia');
+  navigator.getUserMedia({audio: true}, function (stream) {
     self.audioContext.createMediaStreamSource(stream).connect(self.analyser)
     self.analyser.connect(self.scriptProcessor)
     self.scriptProcessor.connect(self.audioContext.destination)
+    console.log(self.scriptProcessor);
+    self.scriptProcessor.onaudioprocess = function(event) {
+      console.log(1)
+      // console.log(event)
+    }
     self.scriptProcessor.addEventListener('audioprocess', function (event) {
+      // console.log(event);
+      var data = event.inputBuffer.getChannelData(0)
+      // console.log(data);
       var frequency = self.pitchDetector.do(event.inputBuffer.getChannelData(0))
       if (frequency && self.onNoteDetected) {
         var note = self.getNote(frequency)
@@ -42,6 +53,7 @@ Tuner.prototype.start = function () {
       }
     })
   }, function (error) {
+    console.log(error);
     alert(error.name + ': ' + error.message)
   })
 }
@@ -53,6 +65,7 @@ Tuner.prototype.start = function () {
  * @returns {int}
  */
 Tuner.prototype.getNote = function (frequency) {
+  console.log(frequency);
   var note = 12 * (Math.log(frequency / this.middleA) / Math.log(2))
   return Math.round(note) + this.semitone
 }

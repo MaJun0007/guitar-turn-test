@@ -26,10 +26,10 @@ window.addEventListener('error', function (error) {
 <script src="vconsole.min.js"></script>
 <script>
   var vConsole = new VConsole();
+  console.log('vConsole');
 </script>
-<script src="aubio.js"></script>
 <script>
-hark = require('hark.bundle.js')
+  hark = require('./node_modules/hark/hark.bundle.js')
 
 navigator.getUserMedia({ audio : true}, onMediaSuccess, function(){});
 
@@ -47,7 +47,14 @@ function onMediaSuccess(blog) {
   });
 };
 </script>
+<script src="aubio.js"></script>
+<script>
+  console.log('aubio.js');
+</script>
 <script src="tuner.js"></script>
+<script>
+  console.log('tuner.js');
+</script>
 <script src="meter.js"></script>
 <script src="frequency-bars.js"></script>
 <script src="note.js"></script>

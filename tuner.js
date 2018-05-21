@@ -36,8 +36,9 @@ Tuner.prototype.start = function () {
     self.audioContext.createMediaStreamSource(stream).connect(self.analyser)
     self.analyser.connect(self.scriptProcessor)
     self.scriptProcessor.connect(self.audioContext.destination)
+    console.log(self.scriptProcessor);
     self.scriptProcessor.onaudioprocess = function(event) {
-      console.log(event)
+      // console.log(event)
     }
     self.scriptProcessor.addEventListener('audioprocess', function (event) {
       // console.log(event);

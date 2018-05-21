@@ -29,8 +29,7 @@ Tuner.prototype.start = function () {
 -        googAutoGainControl: false,
 -        googNoiseSuppression: false,
 -        googHighpassFilter: false,
--      },
-    },
+-      }
   }, function (stream) {
     self.audioContext.createMediaStreamSource(stream).connect(self.analyser)
     self.analyser.connect(self.scriptProcessor)

@@ -33,11 +33,11 @@ Tuner.prototype.start = function () {
       },
     },
   }, function (stream) {
-    console.log(self.scriptProcessor.addEventListener);
     self.audioContext.createMediaStreamSource(stream).connect(self.analyser)
     self.analyser.connect(self.scriptProcessor)
     self.scriptProcessor.connect(self.audioContext.destination)
     self.scriptProcessor.addEventListener('audioprocess', function (event) {
+      console.log(event);
       var data = event.inputBuffer.getChannelData(0)
       console.log(data[0]);
       var frequency = self.pitchDetector.do(event.inputBuffer.getChannelData(0))

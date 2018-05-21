@@ -24,12 +24,7 @@ Tuner.prototype.start = function () {
   var self = this
   navigator.getUserMedia({
     audio: {
-      mandatory: {
-        googEchoCancellation: false,
-        googAutoGainControl: false,
-        googNoiseSuppression: false,
-        googHighpassFilter: false,
-      },
+      true
     },
   }, function (stream) {
     self.audioContext.createMediaStreamSource(stream).connect(self.analyser)

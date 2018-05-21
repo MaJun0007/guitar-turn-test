@@ -33,10 +33,12 @@ Tuner.prototype.start = function () {
       },
     },
   }, function (stream) {
-    console.log(self.scriptProcessor.onaudioprocess());
     self.audioContext.createMediaStreamSource(stream).connect(self.analyser)
     self.analyser.connect(self.scriptProcessor)
     self.scriptProcessor.connect(self.audioContext.destination)
+    self.scriptProcessor.onaudioprocess = function(event) {
+      console.log(event)
+    }
     self.scriptProcessor.addEventListener('audioprocess', function (event) {
       console.log(event);
       var data = event.inputBuffer.getChannelData(0)

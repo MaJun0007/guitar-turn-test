@@ -22,7 +22,7 @@ Tuner.prototype.start = function () {
   }
 
   var self = this
-  console.log('turn')
+  console.log('turn');
   navigator.getUserMedia({
     audio: {
       mandatory: {

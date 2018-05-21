@@ -69,6 +69,7 @@ Tuner.prototype.start = function () {
  * @returns {int}
  */
 Tuner.prototype.getNote = function (frequency) {
+  console.log(frequency);
   var note = 12 * (Math.log(frequency / this.middleA) / Math.log(2))
   return Math.round(note) + this.semitone
 }

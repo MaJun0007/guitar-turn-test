@@ -22,7 +22,7 @@ Tuner.prototype.start = function () {
   }
 
   var self = this
-  console.log('turn');
+  console.log('navigator.getUserMedia');
   navigator.getUserMedia({
     audio: {
       mandatory: {
@@ -33,6 +33,7 @@ Tuner.prototype.start = function () {
       },
     },
   }, function (stream) {
+    consolie.log(stream);
     self.audioContext.createMediaStreamSource(stream).connect(self.analyser)
     self.analyser.connect(self.scriptProcessor)
     self.scriptProcessor.connect(self.audioContext.destination)

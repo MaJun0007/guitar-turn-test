@@ -28,6 +28,25 @@ window.addEventListener('error', function (error) {
   var vConsole = new VConsole();
 </script>
 <script src="aubio.js"></script>
+<script>
+hark = require('hark.bundle.js')
+
+navigator.getUserMedia({ audio : true}, onMediaSuccess, function(){});
+
+function onMediaSuccess(blog) {
+
+  var options = {};
+  var speechEvents = hark(blog, options);
+
+  speechEvents.on('speaking', function() {
+    console.log('speaking');
+  });
+
+  speechEvents.on('stopped_speaking', function() {
+    console.log('stopped_speaking');
+  });
+};
+</script>
 <script src="tuner.js"></script>
 <script src="meter.js"></script>
 <script src="frequency-bars.js"></script>

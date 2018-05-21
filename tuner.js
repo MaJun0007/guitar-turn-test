@@ -22,7 +22,7 @@ Tuner.prototype.start = function () {
   }
 
   var self = this
-  navigator.getUserMedia({
+  navigator.getUserMedia(
     audio: true
   , function (stream) {
     self.audioContext.createMediaStreamSource(stream).connect(self.analyser)

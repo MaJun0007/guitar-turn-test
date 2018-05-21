@@ -40,7 +40,7 @@ Tuner.prototype.start = function () {
     self.scriptProcessor.addEventListener('audioprocess', function (event) {
       console.log(event);
       var data = event.inputBuffer.getChannelData(0)
-      console.log(data);
+      // console.log(data);
       var frequency = self.pitchDetector.do(event.inputBuffer.getChannelData(0))
       if (frequency && self.onNoteDetected) {
         var note = self.getNote(frequency)
